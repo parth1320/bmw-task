@@ -7,14 +7,21 @@ const csvParser = require("csv-parser");
 const app = express();
 const port = 3000;
 
-const dbconfig = {
+const connection = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
   password: "",
   database: "bmw",
-};
+});
 
-const pool = mysql.createPool(dbconfig);
+// const dbconfig = {
+//   host: "127.0.0.1",
+//   user: "root",
+//   password: "",
+//   database: "bmw",
+// };
+
+// const pool = mysql.createPool(dbconfig);
 
 const upload = multer({ dest: "uploads/" });
 
@@ -26,19 +33,28 @@ app.post("/upload", upload.single("csvfile"), (req, res) => {
     .on("data", (data) => {
       const query = `INSERT INTO capacity (cycle_number, time, current, voltage) VALUES ?`;
       const values = [Object.values(data)];
-      pool.getConnection((err, connection) => {
-        if (err) {
-          console.log("Error getting MySQL connection:", err);
-        }
 
-        connection.query(query, [values], (error, results, fields) => {
-          if (error) {
-            console.log("Error inserting data: ", error);
-          } else {
-            console.log("Data inserted successfully");
-          }
-        });
+      connection.query(query, [values], (error, results, fields) => {
+        if (error) {
+          console.error("Error inserting data: ", error);
+        } else {
+          console.log("Data inserted successfully");
+        }
       });
+
+      //   pool.getConnection((err, connection) => {
+      //     if (err) {
+      //       console.log("Error getting MySQL connection:", err);
+      //     }
+
+      //     connection.query(query, [values], (error, results, fields) => {
+      //       if (error) {
+      //         console.log("Error inserting data: ", error);
+      //       } else {
+      //         console.log("Data inserted successfully");
+      //       }
+      //     });
+      //   });
     })
     .on("end", () => {
       // Close the MySQL connection
