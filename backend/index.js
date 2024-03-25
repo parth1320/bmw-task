@@ -46,6 +46,19 @@ app.post("/upload", upload.single("csvfile"), (req, res) => {
   });
 });
 
+app.get("/data", (req, res) => {
+  const query = `SELECT * FROM capacity`;
+
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error("Error executing SQL query", error);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    res.json(results[1]);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
