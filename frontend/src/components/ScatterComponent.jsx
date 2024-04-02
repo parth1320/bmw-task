@@ -14,7 +14,30 @@ ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 const ScatterComponent = () => {
   const [datas, setDatas] = useState([]);
-  const [transformData, setTransformData] = useState(null);
+  const [scatterData, setScatterData] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (datas.length) {
+      const filteredData = datas.map((item) => ({
+        x: item.voltage,
+        y: item.current,
+      }));
+      setScatterData(filteredData);
+    }
+  }, [datas]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/allData");
+      setDatas(response.data);
+    } catch (error) {
+      console.error("Error fetching columns:", error);
+    }
+  };
 
   const options = {
     scales: {
@@ -24,43 +47,18 @@ const ScatterComponent = () => {
     },
   };
 
-  useEffect(() => {
-    fetchData();
-  });
-  console.log(datas);
-  if (datas.length) {
-    const filteredData = datas.map((item) => ({
-      x: item.capacity,
-      y: item.cycle_number,
-    }));
-    const data = {
-      datasets: [
-        {
-          label: "A dataset",
-          data: filteredData,
-          backgroundColor: "rgba(255, 99, 132, 1)",
-        },
-      ],
-    };
-
-    setTransformData(data);
-  }
-
-  console.log(transformData);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/allData");
-      setDatas(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching columns:", error);
-    }
+  const data = {
+    datasets: [
+      {
+        label: "A dataset",
+        data: scatterData,
+        backgroundColor: "rgba(255, 99, 132, 1)",
+      },
+    ],
   };
-
   return (
     <>
-      <Scatter options={options} data={transformData} />;
+      <Scatter options={options} data={data} />;
     </>
   );
 };

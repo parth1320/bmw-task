@@ -41,16 +41,6 @@ export function App() {
     },
   };
 
-  // const labels = [
-  //   "January",
-  //   "February",
-  //   "March",
-  //   "April",
-  //   "May",
-  //   "June",
-  //   "July",
-  // ];
-
   useEffect(() => {
     fetchData();
   }, []);
