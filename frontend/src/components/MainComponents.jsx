@@ -7,7 +7,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { GetAllChartData, UploadImage } from "../redux/features/ChartService";
 import _ from "lodash";
 import Loader from "./Common/Loader";
+import convertArrayToTwoDigitTime from "./Common/TimeConversion";
 
+// Color schemes for chart elements
 const colorsSecond = [
   "#077600",
   "#ffc107",
@@ -24,19 +26,22 @@ const colorsHoverSecond = [
   "rgba(0,0,0,1)",
 ];
 
+// MainComponent responsible for rendering charts and managing data
 const MainComponent = () => {
   const dispatch = useDispatch();
-  // const [loading, setLoading] = useState(false);
+
+  // State variables to manage chart data and display options
   const [isChartData, setChartData] = useState(null);
   const [isTime, setTime] = useState(false);
   const [isChartShow, setChartShow] = useState({
     line: false,
     scatter: false,
   });
+  // Redux state and action for chart data and loading status
   const { getChartListData, loading } = useSelector((state) => state.charts);
 
+  // Function to handle file upload
   const handleFileUpload = async (file) => {
-    // setLoading(true);
     try {
       if (!file.name.endsWith(".csv")) {
         throw new Error("Invalid file format. Please upload a CSV file.");
@@ -53,14 +58,12 @@ const MainComponent = () => {
       } else if (res?.type === "charts/UploadImage/rejected") {
         toast.error(`Error uploading CSV file`, { autoClose: 3000 });
       }
-      // setLoading(false);
     } catch (error) {
       toast.error(`Error uploading CSV file: ${error}`, { autoClose: 3000 });
-      // console.error("Error uploading CSV file:", error);
-      // setLoading(false);
     }
   };
 
+  // Function to handle chart selection
   const handleSelectChart = (e, text) => {
     e.preventDefault();
     setChartShow({
@@ -69,6 +72,7 @@ const MainComponent = () => {
     });
   };
 
+  // Function to format chart data for rendering
   const getAllChartsOptionData = async (dataChart, colors) => {
     if (dataChart) {
       const returnDataChartData = await _.map(
@@ -103,10 +107,12 @@ const MainComponent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getChartListData]);
 
+  // Function to fetch chart data and configure options
   const getChartOption = async (checkTimeCycle) => {
     if (getChartListData.length) {
       const cycles = _.map(getChartListData, (data) => data.cycle_number);
-      const times = _.map(getChartListData, (data) => data.time);
+      const timeData = _.map(getChartListData, (data) => data.time);
+      const times = convertArrayToTwoDigitTime(timeData);
       const dataQuterlyVisit = await {
         Current: _.map(getChartListData, (data) => {
           return { current: data.current };
@@ -115,7 +121,7 @@ const MainComponent = () => {
           return { voltage: data.voltage };
         }),
         Capacity: _.map(getChartListData, (data) => {
-          return { current: data.capacity };
+          return { capacity: data.capacity };
         }),
       };
       const visitData = {
@@ -129,11 +135,13 @@ const MainComponent = () => {
     }
   };
 
+  // Function to toggle X-axis data between Time and Cycle Number
   const toggleXaxes = () => {
     setTime(!isTime);
     getChartOption(!isTime);
   };
 
+  // Render component with file upload, chart selection buttons, and chart components
   return (
     <>
       <div className="container mx-auto">
@@ -181,9 +189,9 @@ const MainComponent = () => {
             </div>
           </div>
           {isChartShow?.scatter && getChartListData?.length ? (
-            <ScatterComponent isChartData={isChartData} />
+            <ScatterComponent className="w-auto" isChartData={isChartData} />
           ) : isChartShow?.line && getChartListData?.length ? (
-            <LineComponent isChartData={isChartData} />
+            <LineComponent className="w-auto" isChartData={isChartData} />
           ) : (
             <></>
           )}

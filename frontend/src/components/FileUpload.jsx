@@ -1,26 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
 
+// FileUpload component takes a prop onFileUpload
 const FileUpload = ({ onFileUpload }) => {
+  // useSelector hook from Redux to get data from the store
   const { getChartListData } = useSelector((state) => state.charts);
+
+  // useDropzone hook to handle file drops
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      "text/csv": [".csv"],
+      "text/csv": [".csv"], // Accepts only CSV files
     },
     onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      onFileUpload(file);
+      const file = acceptedFiles[0]; // Get the first accepted file
+      onFileUpload(file); // Pass the file to the callback function
     },
   });
 
+  // Render the dropzone area
   return (
     <div
       {...getRootProps()}
       className="dropzone border border-dashed py-40 text-center cursor-pointer"
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps()} /> {/* Hidden input for file selection */}
+      {/* Conditional rendering based on the existence of chart data */}
       {getChartListData?.length ? (
+        // If chart data exists, render an SVG
         <div className="w-100">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -32,6 +39,7 @@ const FileUpload = ({ onFileUpload }) => {
           </svg>
         </div>
       ) : (
+        // If no chart data, prompt to drop a CSV file
         <h3>Drag 'n' drop a CSV file here, or click to select</h3>
       )}
     </div>

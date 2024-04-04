@@ -10,6 +10,7 @@ import {
 import { Chart, Scatter } from "react-chartjs-2";
 import zoomPlugin from "chartjs-plugin-zoom";
 
+// Register necessary Chart.js components and plugins
 ChartJS.register(
   LinearScale,
   PointElement,
@@ -19,17 +20,21 @@ ChartJS.register(
   zoomPlugin,
 );
 
+// ScatterComponent renders a scatter chart and a reset zoom button
 const ScatterComponent = ({ isChartData }) => {
   const chartRef = React.useRef(null);
 
+  // Function to handle resetting zoom on the chart
   const handleResetZoom = () => {
     if (chartRef && chartRef.current) {
       chartRef.current.resetZoom();
     }
   };
 
+  // Render component with reset zoom button and Scatter chart
   return (
     <>
+      {/* Button to reset zoom */}
       <button
         className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
         onClick={handleResetZoom}

@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 
+// Register necessary Chart.js components and plugins
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,16 +24,20 @@ ChartJS.register(
   zoomPlugin,
 );
 
+// LineComponent receives isChartData as props
 const LineComponent = ({ isChartData }) => {
   const chartRef = React.useRef(null);
 
+  // Function to handle resetting zoom on the chart
   const handleResetZoom = () => {
     if (chartRef && chartRef.current) {
       chartRef.current.resetZoom();
     }
   };
+  // Render component with reset zoom button and Line chart
   return (
     <>
+      {/* Button to reset zoom */}
       <button
         className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
         onClick={handleResetZoom}
@@ -40,6 +45,7 @@ const LineComponent = ({ isChartData }) => {
         Reset Zoom
       </button>
       <div>
+        {/* Render Line chart if isChartData exists */}
         {isChartData && (
           <>
             <Line
