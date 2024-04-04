@@ -59,7 +59,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
           if (err) {
             throw err;
           } else {
-            res.send(results);
+            // console.log("data insertes successfully");
           }
         });
       })
