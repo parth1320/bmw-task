@@ -22,12 +22,12 @@ This repository contains a data visualization tool designed to analyze and visua
 4. Run `npm install` to install dependencies.
 5. Start the development server by running `npm run dev`.
 
-**Brief Overview of the Tool**
+**_Brief Overview of the Tool_**
 
 This tool facilitates the visualization of data extracted from CSV files. Here's a brief overview of its functionality:
 
 1. **Upload CSV File**: Users have the option to upload a CSV file containing relevant data.
-2. ** Line Chart Visualization**: The tool renders the data from the CSV file into a line chart using Chart.js and react-chartjs-2. Initially, it 
+2. **Line Chart Visualization**: The tool renders the data from the CSV file into a line chart using Chart.js and react-chartjs-2. Initially, it 
                                   displays as a multiline chart.
 3. **Chart Customization**: Users can select between a line or scatter chart. Additionally, they can manipulate the data displayed on the chart by 
                             selecting specific parameters like voltage, current, and capacity.
