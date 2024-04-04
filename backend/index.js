@@ -58,10 +58,9 @@ app.post("/upload", upload.single("file"), (req, res) => {
         connection.query(insertQuery, [values], (err, results) => {
           if (err) {
             throw err;
+          } else {
+            res.send(results);
           }
-          // } else {
-          //   console.log("Data insering successfully");
-          // }
         });
       })
       .on("end", () => {

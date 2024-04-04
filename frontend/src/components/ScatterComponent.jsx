@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -7,58 +7,65 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Scatter } from "react-chartjs-2";
-import axios from "axios";
+import { Chart, Scatter } from "react-chartjs-2";
+import zoomPlugin from "chartjs-plugin-zoom";
 
-ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
+ChartJS.register(
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  zoomPlugin,
+);
 
-const ScatterComponent = () => {
-  const [datas, setDatas] = useState([]);
-  const [scatterData, setScatterData] = useState(null);
+const ScatterComponent = ({ isChartData }) => {
+  const chartRef = React.useRef(null);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (datas.length) {
-      const filteredData = datas.map((item) => ({
-        x: item.voltage,
-        y: item.current,
-      }));
-      setScatterData(filteredData);
-    }
-  }, [datas]);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/allData");
-      setDatas(response.data);
-    } catch (error) {
-      console.error("Error fetching columns:", error);
+  const handleResetZoom = () => {
+    if (chartRef && chartRef.current) {
+      chartRef.current.resetZoom();
     }
   };
 
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
-
-  const data = {
-    datasets: [
-      {
-        label: "A dataset",
-        data: scatterData,
-        backgroundColor: "rgba(255, 99, 132, 1)",
-      },
-    ],
-  };
   return (
     <>
-      <Scatter options={options} data={data} />;
+      <button
+        className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        onClick={handleResetZoom}
+      >
+        Reset Zoom
+      </button>
+      <Scatter
+        ref={chartRef}
+        data={{
+          labels: isChartData?.labels,
+          datasets: isChartData?.data,
+        }}
+        options={{
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            title: {
+              display: true,
+              text: "Scatter Chart",
+            },
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true,
+                },
+                mode: "xy",
+              },
+            },
+          },
+        }}
+      />
     </>
   );
 };
