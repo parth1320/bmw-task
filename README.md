@@ -27,11 +27,14 @@ This repository contains a data visualization tool designed to analyze and visua
 This tool facilitates the visualization of data extracted from CSV files. Here's a brief overview of its functionality:
 
 1. **Upload CSV File**: Users have the option to upload a CSV file containing relevant data.
-2.** Line Chart Visualization**: The tool renders the data from the CSV file into a line chart using Chart.js and react-chartjs-2. Initially, it displays as a multiline chart.
-3. **Chart Customization**: Users can select between a line or scatter chart. Additionally, they can manipulate the data displayed on the chart by selecting specific parameters like voltage, current, and capacity.
+2. ** Line Chart Visualization**: The tool renders the data from the CSV file into a line chart using Chart.js and react-chartjs-2. Initially, it 
+                                  displays as a multiline chart.
+3. **Chart Customization**: Users can select between a line or scatter chart. Additionally, they can manipulate the data displayed on the chart by 
+                            selecting specific parameters like voltage, current, and capacity.
 4. **Hover Information**: Hovering over the chart displays data for a particular point.
 5. **Zooming**: Users can zoom in and out of the chart using mouse scrolling. A reset option is also available to revert to the original view.
-6. **Toggle X-Axis Data**: Users have the flexibility to toggle between displaying data based on time or cycle_number on the X-axis by clicking a toggle button located near the chart.
+6. **Toggle X-Axis Data**: Users have the flexibility to toggle between displaying data based on time or cycle_number on the X-axis by clicking a 
+                           toggle button located near the chart.
 
 **Dependencies**
 1. React.js
