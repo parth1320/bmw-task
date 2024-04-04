@@ -4,7 +4,7 @@ This repository contains a data visualization tool designed to analyze and visua
 
 ## Setup Instructions
 
-### Backend
+**_Backend_**
 
 1. Install Apache XAMPP for database connection.
 2. Create a database named 'bmw' in phpMyAdmin.
@@ -14,7 +14,7 @@ This repository contains a data visualization tool designed to analyze and visua
 6. Install necessary npm dependencies by running `npm install`.
 7. Finally, run the backend server using `node index.js`.
 
-### Frontend
+**_Frontend_**
 
 1. Install Vite + React.
 2. Install Tailwind CSS for responsive design.
@@ -22,7 +22,7 @@ This repository contains a data visualization tool designed to analyze and visua
 4. Run `npm install` to install dependencies.
 5. Start the development server by running `npm run dev`.
 
-##Brief Overview of the Tool
+**Brief Overview of the Tool**
 
 This tool facilitates the visualization of data extracted from CSV files. Here's a brief overview of its functionality:
 
