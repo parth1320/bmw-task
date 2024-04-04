@@ -42,4 +42,9 @@ This tool facilitates the visualization of data extracted from CSV files. Here's
 3. react-chartjs-2
 4. chartjs-plugin-zoom
 5. tailwindcss
-6. etc...
+6. lodash
+7. express
+8. mysql
+9. multer
+10. csv-parser etc...
+    
