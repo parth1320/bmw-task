@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -34,6 +34,15 @@ const LineComponent = ({ isChartData }) => {
       chartRef.current.resetZoom();
     }
   };
+
+  // Function to download image of the chart
+  const downloadImage = useCallback(() => {
+    const link = document.createElement("a");
+    link.download = "chart.png";
+    link.href = chartRef.current.toBase64Image();
+    link.click();
+  }, []);
+
   // Render component with reset zoom button and Line chart
   return (
     <>
@@ -44,7 +53,13 @@ const LineComponent = ({ isChartData }) => {
       >
         Reset Zoom
       </button>
-      <div>
+      <button
+        className="bg-white hover:bg-gray-100 ms-3 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        onClick={downloadImage}
+      >
+        Download
+      </button>
+      <div className="w-100 aaaaaaaaaaaaaaaaaaa">
         {/* Render Line chart if isChartData exists */}
         {isChartData && (
           <>

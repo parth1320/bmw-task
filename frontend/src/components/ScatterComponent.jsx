@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -7,7 +7,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Chart, Scatter } from "react-chartjs-2";
+import { Scatter } from "react-chartjs-2";
 import zoomPlugin from "chartjs-plugin-zoom";
 
 // Register necessary Chart.js components and plugins
@@ -31,6 +31,14 @@ const ScatterComponent = ({ isChartData }) => {
     }
   };
 
+  // Function to download image of the chart
+  const downloadImage = useCallback(() => {
+    const link = document.createElement("a");
+    link.download = "chart.png";
+    link.href = chartRef.current.toBase64Image();
+    link.click();
+  }, []);
+
   // Render component with reset zoom button and Scatter chart
   return (
     <>
@@ -40,6 +48,12 @@ const ScatterComponent = ({ isChartData }) => {
         onClick={handleResetZoom}
       >
         Reset Zoom
+      </button>
+      <button
+        className="bg-white hover:bg-gray-100 ms-3 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        onClick={downloadImage}
+      >
+        Download
       </button>
       <Scatter
         ref={chartRef}
