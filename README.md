@@ -33,7 +33,8 @@ This tool facilitates the visualization of data extracted from CSV files. Here's
                             selecting specific parameters like voltage, current, and capacity.
 4. **Hover Information**: Hovering over the chart displays data for a particular point.
 5. **Zooming**: Users can zoom in and out of the chart using mouse scrolling. A reset option is also available to revert to the original view.
-6. **Toggle X-Axis Data**: Users have the flexibility to toggle between displaying data based on time or cycle_number on the X-axis by clicking a 
+6. **Download**: Users can download the charts
+7. **Toggle X-Axis Data**: Users have the flexibility to toggle between displaying data based on time or cycle_number on the X-axis by clicking a 
                            toggle button located near the chart.
 
 **Dependencies**
