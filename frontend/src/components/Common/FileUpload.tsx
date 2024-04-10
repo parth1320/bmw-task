@@ -2,10 +2,13 @@ import React from "react";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
 
+type FileUploadPropes = {
+  onFileUpload: any;
+}
 // FileUpload component takes a prop onFileUpload
-const FileUpload = ({ onFileUpload }) => {
+const FileUpload = ({ onFileUpload }: FileUploadPropes) => {
   // useSelector hook from Redux to get data from the store
-  const { getChartListData } = useSelector((state) => state.charts);
+  const { getChartListData } = useSelector((state: any) => state.charts);
 
   // useDropzone hook to handle file drops
   const { getRootProps, getInputProps } = useDropzone({
@@ -24,7 +27,7 @@ const FileUpload = ({ onFileUpload }) => {
       {...getRootProps()}
       className="dropzone border border-dashed py-40 text-center cursor-pointer"
     >
-      <input {...getInputProps()} /> {/* Hidden input for file selection */}
+      {/* <Input {...getInputProps()} /> Hidden input for file selection */}
       {/* Conditional rendering based on the existence of chart data */}
       {getChartListData?.length ? (
         // If chart data exists, render an SVG

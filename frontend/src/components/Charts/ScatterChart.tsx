@@ -1,31 +1,27 @@
 import React, { useCallback } from "react";
-import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   PointElement,
   LineElement,
-  Title,
   Tooltip,
   Legend,
+  LinearScale,
 } from "chart.js";
+import { Scatter } from "react-chartjs-2";
 import zoomPlugin from "chartjs-plugin-zoom";
 
 // Register necessary Chart.js components and plugins
 ChartJS.register(
-  CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
-  Title,
   Tooltip,
   Legend,
   zoomPlugin,
 );
 
-// LineComponent receives isChartData as props
-const LineComponent = ({ isChartData }) => {
+// ScatterChart renders a scatter chart and a reset zoom button
+const ScatterChart = ({ isChartData }) => {
   const chartRef = React.useRef(null);
 
   // Function to handle resetting zoom on the chart
@@ -43,7 +39,7 @@ const LineComponent = ({ isChartData }) => {
     link.click();
   }, []);
 
-  // Render component with reset zoom button and Line chart
+  // Render component with reset zoom button and Scatter chart
   return (
     <>
       {/* Button to reset zoom */}
@@ -59,45 +55,38 @@ const LineComponent = ({ isChartData }) => {
       >
         Download
       </button>
-      <div className="w-100 aaaaaaaaaaaaaaaaaaa">
-        {/* Render Line chart if isChartData exists */}
-        {isChartData && (
-          <>
-            <Line
-              ref={chartRef}
-              data={{
-                labels: isChartData?.labels,
-                datasets: isChartData?.data,
-              }}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: {
-                    position: "top",
-                  },
-                  title: {
-                    display: true,
-                    text: "Line Chart",
-                  },
-                  zoom: {
-                    zoom: {
-                      wheel: {
-                        enabled: true,
-                      },
-                      pinch: {
-                        enabled: true,
-                      },
-                      mode: "xy",
-                    },
-                  },
+      <Scatter
+        ref={chartRef}
+        data={{
+          labels: isChartData?.labels,
+          datasets: isChartData?.data,
+        }}
+        options={{
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            title: {
+              display: true,
+              text: "Scatter Chart",
+            },
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
                 },
-              }}
-            />
-          </>
-        )}
-      </div>
+                pinch: {
+                  enabled: true,
+                },
+                mode: "xy",
+              },
+            },
+          },
+        }}
+      />
     </>
   );
 };
 
-export default LineComponent;
+export default ScatterChart;

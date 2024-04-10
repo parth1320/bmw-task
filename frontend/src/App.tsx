@@ -1,12 +1,12 @@
 import React from "react";
-import MainComponent from "./components/MainComponents";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Charts from "./components/Charts";
 
 export function App() {
   return (
     <>
-      <MainComponent />
+      <Charts />
       <ToastContainer />
     </>
   );

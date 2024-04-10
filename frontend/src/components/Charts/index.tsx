@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import FileUpload from "./FileUpload";
-import ScatterComponent from "./ScatterComponent";
-import LineComponent from "./LineComponent";
+import ScatterChart from "./ScatterChart";
+import LineChart from "./LineChart";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { GetAllChartData, UploadImage } from "../redux/features/ChartService";
+import { GetAllChartData, UploadImage } from "../../redux/features/ChartService";
 import _ from "lodash";
-import Loader from "./Common/Loader";
-import convertArrayToTwoDigitTime from "./Common/TimeConversion";
+import Loader from "../Common/Loader";
+import {convertArrayToTwoDigitTime} from "../Common/TimeConversion";
+import FileUpload from "../Common/FileUpload";
 
 // Color schemes for chart elements
 const colorsSecond = [
@@ -27,21 +27,21 @@ const colorsHoverSecond = [
 ];
 
 // MainComponent responsible for rendering charts and managing data
-const MainComponent = () => {
+const Charts = () => {
   const dispatch = useDispatch();
 
   // State variables to manage chart data and display options
-  const [isChartData, setChartData] = useState(null);
-  const [isTime, setTime] = useState(false);
-  const [isChartShow, setChartShow] = useState({
+  const [isChartData, setChartData] = useState<any>(null);
+  const [isTime, setTime] = useState<Boolean>(false);
+  const [isChartShow, setChartShow] = useState<any>({
     line: false,
     scatter: false,
   });
   // Redux state and action for chart data and loading status
-  const { getChartListData, loading } = useSelector((state) => state.charts);
+  const { getChartListData, loading } = useSelector((state: any) => state.charts);
 
   // Function to handle file upload
-  const handleFileUpload = async (file) => {
+  const handleFileUpload = async (file: any) => {
     try {
       if (!file.name.endsWith(".csv")) {
         throw new Error("Invalid file format. Please upload a CSV file.");
@@ -64,7 +64,7 @@ const MainComponent = () => {
   };
 
   // Function to handle chart selection
-  const handleSelectChart = (e, text) => {
+  const handleSelectChart = (e: any, text: string) => {
     e.preventDefault();
     setChartShow({
       line: text === "line",
@@ -73,11 +73,11 @@ const MainComponent = () => {
   };
 
   // Function to format chart data for rendering
-  const getAllChartsOptionData = async (dataChart, colors) => {
+  const getAllChartsOptionData = async (dataChart: object, colors: any) => {
     if (dataChart) {
       const returnDataChartData = await _.map(
         Object.keys(dataChart),
-        (key, index) => {
+        (key: string, index: number) => {
           const quarterlyData = _.map(
             dataChart[key],
             (item) => Object.values(item)[0],
@@ -108,20 +108,20 @@ const MainComponent = () => {
   }, [getChartListData]);
 
   // Function to fetch chart data and configure options
-  const getChartOption = async (checkTimeCycle) => {
+  const getChartOption = async (checkTimeCycle: boolean) => {
     if (getChartListData.length) {
-      const cycles = _.map(getChartListData, (data) => data.cycle_number);
-      const timeData = _.map(getChartListData, (data) => data.time);
+      const cycles = _.map(getChartListData, (data: any) => data.cycle_number);
+      const timeData = _.map(getChartListData, (data: any) => data.time);
       const times = convertArrayToTwoDigitTime(timeData);
       const dataQuterlyVisit = await {
-        Current: _.map(getChartListData, (data) => {
-          return { current: data.current };
+        Current: _.map(getChartListData, (currentData: any) => {
+          return { current: currentData?.current };
         }),
-        Voltage: _.map(getChartListData, (data) => {
-          return { voltage: data.voltage };
+        Voltage: _.map(getChartListData, (voltageData: any) => {
+          return { voltage: voltageData.voltage };
         }),
-        Capacity: _.map(getChartListData, (data) => {
-          return { capacity: data.capacity };
+        Capacity: _.map(getChartListData, (capacityData: any) => {
+          return { capacity: capacityData.capacity };
         }),
       };
       const visitData = {
@@ -189,9 +189,9 @@ const MainComponent = () => {
             </div>
           </div>
           {isChartShow?.scatter && getChartListData?.length ? (
-            <ScatterComponent className="w-auto" isChartData={isChartData} />
+            <ScatterChart isChartData={isChartData} />
           ) : isChartShow?.line && getChartListData?.length ? (
-            <LineComponent className="w-auto" isChartData={isChartData} />
+            <LineChart isChartData={isChartData} />
           ) : (
             <></>
           )}
@@ -214,4 +214,4 @@ const MainComponent = () => {
   );
 };
 
-export default MainComponent;
+export default Charts;

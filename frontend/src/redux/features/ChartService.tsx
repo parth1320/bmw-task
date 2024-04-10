@@ -6,8 +6,9 @@ let url = "http://localhost:3000";
 // Uncomment the line below to use the API URL from environment variables
 // let url = process.env.REACT_APP_API_URL;
 
+
 // Async thunk to fetch all chart data from the server
-export const GetAllChartData = createAsyncThunk(
+export const GetAllChartData: any = createAsyncThunk(
   "charts/GetAllChartData",
   async (_, { rejectWithValue }) => {
     try {
@@ -20,9 +21,9 @@ export const GetAllChartData = createAsyncThunk(
 );
 
 // Async thunk to upload an image file to the server
-export const UploadImage = createAsyncThunk(
+export const UploadImage: any = createAsyncThunk(
   "charts/UploadImage",
-  async (args, { rejectWithValue }) => {
+  async (args: any, { rejectWithValue }) => {
     try {
       const { data } = args;
       const resp = await axios.post(`${url}/upload`, data, {
@@ -46,7 +47,7 @@ const ChartSlice = createSlice({
     getChartListData: [], // Array to store chart data
   },
   reducers: {
-    setChartPage: (state, action) => {
+    setChartPage: (state: any, action: any) => {
       state.currentPage = action.payload; // Update current page in state
     },
   },

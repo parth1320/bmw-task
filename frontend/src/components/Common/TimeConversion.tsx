@@ -1,5 +1,5 @@
-const convertArrayToTwoDigitTime = (arrayOfTimes) => {
-  let formattedTimes = arrayOfTimes.map((time) => {
+export const convertArrayToTwoDigitTime = (arrayOfTimes: any) => {
+  let formattedTimes = arrayOfTimes.map((time: number) => {
     // Calculate hours, minutes, and seconds
     let hours = Math.floor(time / 3600);
     let minutes = Math.floor((time % 3600) / 60);
@@ -11,10 +11,9 @@ const convertArrayToTwoDigitTime = (arrayOfTimes) => {
     let formattedSeconds = ("0" + seconds).slice(-2);
 
     // Return formatted time
-    return formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
+    return `${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`;
+    // return formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
   });
 
   return formattedTimes;
 };
-
-export default convertArrayToTwoDigitTime;
