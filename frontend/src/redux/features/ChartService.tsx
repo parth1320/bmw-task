@@ -2,10 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Define the base URL for API requests
-let url = "http://localhost:3000";
+let url = "http://localhost:3300";
 // Uncomment the line below to use the API URL from environment variables
 // let url = process.env.REACT_APP_API_URL;
-
 
 // Async thunk to fetch all chart data from the server
 export const GetAllChartData: any = createAsyncThunk(

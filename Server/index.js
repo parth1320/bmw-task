@@ -1,12 +1,14 @@
 const express = require("express");
 const sequelize = require("./database/sequelize.config");
 const routes = require("./routes/index");
+const cors = require("cors");
 
 const app = express();
 const PORT = 3300;
 
 //middleware
 app.use(express.json());
+app.use(cors());
 
 //Routes
 app.use(routes);

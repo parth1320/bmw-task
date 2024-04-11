@@ -3,10 +3,13 @@ import ScatterChart from "./ScatterChart";
 import LineChart from "./LineChart";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { GetAllChartData, UploadImage } from "../../redux/features/ChartService";
+import {
+  GetAllChartData,
+  UploadImage,
+} from "../../redux/features/ChartService";
 import _ from "lodash";
 import Loader from "../Common/Loader";
-import {convertArrayToTwoDigitTime} from "../Common/TimeConversion";
+import { convertArrayToTwoDigitTime } from "../Common/TimeConversion";
 import FileUpload from "../Common/FileUpload";
 
 // Color schemes for chart elements
@@ -38,7 +41,9 @@ const Charts = () => {
     scatter: false,
   });
   // Redux state and action for chart data and loading status
-  const { getChartListData, loading } = useSelector((state: any) => state.charts);
+  const { getChartListData, loading } = useSelector(
+    (state: any) => state.charts,
+  );
 
   // Function to handle file upload
   const handleFileUpload = async (file: any) => {
@@ -47,6 +52,8 @@ const Charts = () => {
         throw new Error("Invalid file format. Please upload a CSV file.");
       }
       const formData = new FormData();
+      console.log(formData);
+
       formData.append("file", file);
       const res = await dispatch(UploadImage({ data: formData }));
       if (res?.type === "charts/UploadImage/fulfilled") {
