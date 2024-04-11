@@ -1,18 +1,17 @@
 # BMW Data Visualization Tool
 
-This repository contains a data visualization tool designed to analyze and visualize data from BMW batteries. The tool consists of a backend and a frontend component.
+This is a data visualization tool built with React.js and Chart.js, now using TypeScript for the frontend. It provides users with the ability to upload CSV files containing data, visualize the data using interactive charts (such as line plots, multi-line plots, and scatter plots), and manipulate visualization parameters like chart type, and axis labels. For the backend, Sequelize ORM has been integrated, making database interaction more secure and manageable. The tool is designed to be user-friendly, responsive, and capable of handling large datasets efficiently.
 
 ## Setup Instructions
 
 **_Backend_**
 
 1. Install Apache XAMPP for database connection.
-2. Create a database named 'bmw' in phpMyAdmin.
-3. Within the 'bmw' database, create a table named 'capacity' with five fields: `cycle_number`, `time`, `current`, `voltage`, `capacity`.
-4. Navigate to the backend folder.
-5. Run `npm init`.
-6. Install necessary npm dependencies by running `npm install`.
-7. Finally, run the backend server using `node index.js`.
+2. Create a database named 'cell_test_data' in phpMyAdmin.
+3. Navigate to the server folder.
+4. Run `npm init`.
+5. Install necessary npm dependencies by running `npm install`.
+6. Finally, run the backend server using `npm run dev`.
 
 **_Frontend_**
 
@@ -41,11 +40,13 @@ This tool facilitates the visualization of data extracted from CSV files. Here's
 1. React.js
 2. Chart.js
 3. react-chartjs-2
-4. chartjs-plugin-zoom
-5. tailwindcss
-6. lodash
-7. express
-8. mysql
-9. multer
-10. csv-parser etc...
+4. sequelize
+5. express
+6. multer
+7. csv-parser
+8. chartjs-plugin-zoom
+9. tailwindcss
+10. lodash etc ...
+
+
     
